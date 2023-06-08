@@ -1,4 +1,4 @@
-# Pkhmgr
+# Pkgmgr
 包管理
 
 ### 用法:
