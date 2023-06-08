@@ -64,7 +64,8 @@ def installPackage(packageName, version=None, i=domain):
     click.echo(f"[+] Successfully installed package {filename}...")
 
 
-def deletePackage(packageName, version=None):
+def deletePackage(packageName, version=None, i=domain):
+    domain = i
     click.echo(f"[+] Deleting package {packageName} version {version}...")
     package_path = getPackagePath(packageName, version)
     click.echo(f"[+] Package path: {package_path}")
@@ -142,8 +143,9 @@ def install(packagename, version, i):
 @cli.command()
 @click.argument("packagename")
 @click.option("--version", default=None)
-def uninstall(packagename, version):
-    deletePackage(packagename, version)
+@click.option("--i", default=domain)
+def uninstall(packagename, version, i):
+    deletePackage(packagename, version, i)
 
 
 @cli.command()
