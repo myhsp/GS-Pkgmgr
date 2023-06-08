@@ -14,6 +14,6 @@ python ./pkgm.py uninstall test
 指定版本,服务器:
 ```shell
 python ./pkgm.py install test --version 1.0a --i http://114514.com
-python ./pkgm.py install list
+python ./pkgm.py list
 python ./pkgm.py uninstall test --version 1.0a --i http://114514.com
 ```
