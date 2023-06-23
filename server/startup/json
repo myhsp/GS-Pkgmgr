@@ -1,0 +1,14 @@
+{
+    "info": {
+        "author": "Deu5ExMach1Na",
+        "description": "Startup Manager.",
+        "license": "MYZX License",
+        "version": "1.0a"
+    },
+    "releases": {
+        "1.0a": {
+            "upload_time": "2023.6.23.01:01",
+            "url": "/startup/startup1.0a.zip"
+        }
+    }
+}

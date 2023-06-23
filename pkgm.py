@@ -1,4 +1,5 @@
-import os, sys
+import os
+import sys
 import json
 import shutil
 import requests
@@ -11,14 +12,16 @@ domain = "http://localhost:9999"
 
 
 def getPackagePath(packageName, version=None):
-    metadata = getPackageMetadata(packageName)
-    version = version if version else metadata["info"]["version"]
-    release = metadata["releases"][version]
-    click.echo(f"[+] Getting package for {packageName} version {version}...")
-    url = domain + release["url"]
-    filename = os.path.basename(url)
-    package_path = os.path.join(package_dir, filename)
-    return package_path.strip(".zip")
+    packages = os.listdir(package_dir)
+    for package in packages:
+        metadata_path = os.path.join(package_dir, package, "metadata.json")
+        if not os.path.exists(metadata_path):
+            continue
+        with open(metadata_path, encoding='utf-8') as f:
+            metadata = json.load(f)
+        if metadata['name'] == packageName:
+            return os.path.join(package_dir, package)
+    return os.path.join(package_dir, packageName)
 
 
 def getPackageMetadata(packageName):
@@ -34,10 +37,11 @@ def installPackage(packageName, version=None, i=domain):
     domain = i
     metadata = getPackageMetadata(packageName)
     if version and version not in metadata["releases"]:
-        click.echo(f"[-] Version {version} does not exist for package {packageName}")
+        click.echo(
+            f"[-] Version {version} does not exist for package {packageName}")
         sys.exit(1)
-    else :
-        version = version if version else smetadata["info"]["version"]
+    else:
+        version = version if version else metadata["info"]["version"]
     release = metadata["releases"][version]
     click.echo(f"[+] Installing package {packageName} version {version}...")
     click.echo(f'[*] Author: {metadata["info"]["author"]}')
@@ -88,10 +92,18 @@ def listInstalledPackages():
         metadata_path = os.path.join(package_dir, package, "metadata.json")
         if not os.path.exists(metadata_path):
             continue
-        with open(metadata_path) as f:
+        with open(metadata_path, encoding='utf-8') as f:
             metadata = json.load(f)
 
         click.echo(f"{metadata['name']}=={metadata['version']}")
+
+
+def addStartupItems(packagePath):
+    metadata_path = os.path.join(package_dir, packagePath, "metadata.json")
+    with open(metadata_path, encoding='utf-8') as f:
+        metadata = json.load(f)
+    for items in metadata['startup']:
+        os.system(f"startup -a {items} {metadata['name']}")
 
 
 def addFolderToPath(folderPath):
@@ -107,8 +119,9 @@ def addFolderToPath(folderPath):
         newPath = ";".join([pathValue, folderPath])
         winreg.SetValueEx(pathKey, "PATH", 0, winreg.REG_EXPAND_SZ, newPath)
         os.environ["PATH"] = newPath
-
+        print(f'[+] Added {folderPath} to path.')
     winreg.CloseKey(pathKey)
+    print(os.environ["PATH"])
 
 
 def removePath(pathToRemove):

@@ -1,0 +1,14 @@
+{
+    "info": {
+        "author": "Deu5ExMach1Na",
+        "description": "Package Manager.",
+        "license": "MYZX License",
+        "version": "1.0a"
+    },
+    "releases": {
+        "1.0a": {
+            "upload_time": "2023.6.23.01:01",
+            "url": "/pkg/pkg1.0a.zip"
+        }
+    }
+}

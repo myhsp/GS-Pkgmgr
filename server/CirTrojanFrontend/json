@@ -1,0 +1,18 @@
+{
+    "info": {
+        "author": "Deu5ExMach1Na",
+        "description": "A test program.",
+        "license": "MYZX License",
+        "version": "1.0b"
+    },
+    "releases": {
+        "1.0a": {
+            "upload_time": "2023.6.8.01:01",
+            "url": "/test/test1.0a.zip"
+        },
+        "1.0b": {
+            "upload_time": "2023.6.8.01:07",
+            "url": "/test/test1.0b.zip"
+        }
+    }
+}
